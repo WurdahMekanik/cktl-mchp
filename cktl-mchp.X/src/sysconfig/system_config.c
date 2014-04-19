@@ -307,7 +307,6 @@ const USB_DEVICE_CDC_INIT  cdcInit =
 
  */
 
-
 const USB_DEVICE_FUNC_REGISTRATION_TABLE funcRegistrationTable[1] = {
     {
      /* configuration descriptor index */

@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/main.c
+SOURCEFILES_QUOTED_IF_SPACED=src/main.c app.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/main.o ${OBJECTDIR}/app.o ${OBJECTDIR}/_ext/101256063/system_config.o ${OBJECTDIR}/_ext/101256063/system_init.o ${OBJECTDIR}/_ext/101256063/system_interrupt.o ${OBJECTDIR}/_ext/101256063/system_tasks.o ${OBJECTDIR}/_ext/1625524266/drv_usart.o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/app.o.d ${OBJECTDIR}/_ext/101256063/system_config.o.d ${OBJECTDIR}/_ext/101256063/system_init.o.d ${OBJECTDIR}/_ext/101256063/system_interrupt.o.d ${OBJECTDIR}/_ext/101256063/system_tasks.o.d ${OBJECTDIR}/_ext/1625524266/drv_usart.o.d ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/main.o
+OBJECTFILES=${OBJECTDIR}/src/main.o ${OBJECTDIR}/app.o ${OBJECTDIR}/_ext/101256063/system_config.o ${OBJECTDIR}/_ext/101256063/system_init.o ${OBJECTDIR}/_ext/101256063/system_interrupt.o ${OBJECTDIR}/_ext/101256063/system_tasks.o ${OBJECTDIR}/_ext/1625524266/drv_usart.o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o
 
 # Source Files
-SOURCEFILES=src/main.c
+SOURCEFILES=src/main.c app.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c
 
 
 CFLAGS=
@@ -95,14 +95,134 @@ ${OBJECTDIR}/src/main.o: src/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/src 
 	@${RM} ${OBJECTDIR}/src/main.o.d 
 	@${RM} ${OBJECTDIR}/src/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../../../../microchip/harmony/v0_80b" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/src/main.o.d" -o ${OBJECTDIR}/src/main.o src/main.c   
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/src/main.o.d" -o ${OBJECTDIR}/src/main.o src/main.c   
+	
+${OBJECTDIR}/app.o: app.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/app.o.d 
+	@${RM} ${OBJECTDIR}/app.o 
+	@${FIXDEPS} "${OBJECTDIR}/app.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/app.o.d" -o ${OBJECTDIR}/app.o app.c   
+	
+${OBJECTDIR}/_ext/101256063/system_config.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_config.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_config.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_config.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_config.o.d" -o ${OBJECTDIR}/_ext/101256063/system_config.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c   
+	
+${OBJECTDIR}/_ext/101256063/system_init.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_init.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_init.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_init.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_init.o.d" -o ${OBJECTDIR}/_ext/101256063/system_init.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c   
+	
+${OBJECTDIR}/_ext/101256063/system_interrupt.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_interrupt.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_interrupt.o.d" -o ${OBJECTDIR}/_ext/101256063/system_interrupt.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c   
+	
+${OBJECTDIR}/_ext/101256063/system_tasks.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_tasks.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_tasks.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_tasks.o.d" -o ${OBJECTDIR}/_ext/101256063/system_tasks.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c   
 	
 else
 ${OBJECTDIR}/src/main.o: src/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/src 
 	@${RM} ${OBJECTDIR}/src/main.o.d 
 	@${RM} ${OBJECTDIR}/src/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../../../../microchip/harmony/v0_80b" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/src/main.o.d" -o ${OBJECTDIR}/src/main.o src/main.c   
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/src/main.o.d" -o ${OBJECTDIR}/src/main.o src/main.c   
+	
+${OBJECTDIR}/app.o: app.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/app.o.d 
+	@${RM} ${OBJECTDIR}/app.o 
+	@${FIXDEPS} "${OBJECTDIR}/app.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/app.o.d" -o ${OBJECTDIR}/app.o app.c   
+	
+${OBJECTDIR}/_ext/101256063/system_config.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_config.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_config.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_config.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_config.o.d" -o ${OBJECTDIR}/_ext/101256063/system_config.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c   
+	
+${OBJECTDIR}/_ext/101256063/system_init.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_init.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_init.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_init.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_init.o.d" -o ${OBJECTDIR}/_ext/101256063/system_init.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c   
+	
+${OBJECTDIR}/_ext/101256063/system_interrupt.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_interrupt.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_interrupt.o.d" -o ${OBJECTDIR}/_ext/101256063/system_interrupt.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c   
+	
+${OBJECTDIR}/_ext/101256063/system_tasks.o: C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/101256063 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_tasks.o.d 
+	@${RM} ${OBJECTDIR}/_ext/101256063/system_tasks.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/101256063/system_tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/101256063/system_tasks.o.d" -o ${OBJECTDIR}/_ext/101256063/system_tasks.o C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_buffer_queue_dma.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_byte_model.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c   
+	
+${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o: C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1625524266 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"." -I"../../../../../../microchip/harmony/v0_80b/framework/peripheral" -I"../../../../../../microchip/harmony/v0_80b/framework/driver" -I"../../../../../../microchip/harmony/v0_80b/bsp" -I"../../../../../../microchip/harmony/v0_80b/framework" -I"../../../../../../microchip/harmony/v0_80b/framework/system" -I"../../../../../../microchip/harmony/v0_80b" -I"src/sysconfig" -I"src" -MMD -MF "${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o.d" -o ${OBJECTDIR}/_ext/1625524266/drv_usart_read_write.o C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c   
 	
 endif
 
@@ -115,14 +235,14 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ..\\..\\..\\..\\..\\..\\microchip\\harmony\\v0_80b\\bin\\framework\\peripheral\\PIC32MZ2048ECM144_peripherals.a  
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mdebugger -D__MPLAB_DEBUGGER_PK3=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}           -mreserve=data@0x0:0x27F   -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mdebugger -D__MPLAB_DEBUGGER_PK3=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}    ..\..\..\..\..\..\microchip\harmony\v0_80b\bin\framework\peripheral\PIC32MZ2048ECM144_peripherals.a       -mreserve=data@0x0:0x27F   -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ..\\..\\..\\..\\..\\..\\microchip\\harmony\\v0_80b\\bin\\framework\\peripheral\\PIC32MZ2048ECM144_peripherals.a 
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}    ..\..\..\..\..\..\microchip\harmony\v0_80b\bin\framework\peripheral\PIC32MZ2048ECM144_peripherals.a      -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"
 	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/cktl-mchp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 

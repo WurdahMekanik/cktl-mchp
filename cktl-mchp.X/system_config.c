@@ -1,20 +1,23 @@
 /*******************************************************************************
- System Tasks File
+ CDC Basic Demo Configuration file.
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    sys_tasks.c
+    system_config.c
 
   Summary:
-    System tasks File.
+    Top-level configuration file for the CDC Basic demo application for
+    the PIC32 Starter kit
 
   Description:
-    This file will contain any source code necessary to maintain various tasks
-    in the system.
- *******************************************************************************/
-
+    This file contains the USB descriptors and CDC class specific data that
+	needs to be provided by the application.
+*******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2011-2012 released Microchip Technology Inc.  All rights reserved.
+Copyright (c) 2012 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
@@ -37,65 +40,52 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 *******************************************************************************/
 // DOM-IGNORE-END
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+ 
 #include "app.h"
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: System "Tasks" Routine
+// Section: File Scope or Global Constants
 // *****************************************************************************
 // *****************************************************************************
-/*******************************************************************************
-  Function:
-    void SYS_Tasks ( void )
+
+
+// *****************************************************************************
+/* Global USB Device function registration structure
 
   Summary:
-    Calls all module-specific "tasks" routines to maintain module state
+    A function driver has to be registered with the USB device layer
+    using this structure.
 
   Description:
-    This routine calls all module-specific "tasks" routines to maintain module
-    state.
 
-  Precondition:
-    SYS_Initialize has been called
-
-  Parameters:
-    None.
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    int main ( void )
-    {
-        SYS_Initialize(&initData);
-
-        while (true)
-        {
-            SYS_Tasks();
-        }
-    }
-    </code>
 
   Remarks:
-    When not using the dynamic system "Tasks" service, this routine must be
-    implemented by the application's system configuration (in the application's
-    configuration-specific "sys_tasks.c" file).
+
  */
 
-void SYS_Tasks ( void )
-{
-   /* TODO: Call the application's tasks routine */
-   APP_Tasks(/*&appData*/);
-}
+
+    
+
+// *****************************************************************************
+/* Global USB Descriptor Structure
+
+  Summary:
+    Global USB descriptor structure containing pointers to standard USB
+    descriptor structures.
+
+  Description:
 
 
-/*******************************************************************************
- End of File
+  Remarks:
+
 */
+
+
