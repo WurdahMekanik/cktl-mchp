@@ -111,6 +111,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 // USART
+#include "drv_usart_config.h"
 
 
 // SPI

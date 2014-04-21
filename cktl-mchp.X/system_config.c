@@ -56,36 +56,5 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-
-// *****************************************************************************
-/* Global USB Device function registration structure
-
-  Summary:
-    A function driver has to be registered with the USB device layer
-    using this structure.
-
-  Description:
-
-
-  Remarks:
-
- */
-
-
-    
-
-// *****************************************************************************
-/* Global USB Descriptor Structure
-
-  Summary:
-    Global USB descriptor structure containing pointers to standard USB
-    descriptor structures.
-
-  Description:
-
-
-  Remarks:
-
-*/
-
-
+// Set the desired baud rate
+uint32_t baudRate = 115200;

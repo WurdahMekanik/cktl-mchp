@@ -40,32 +40,57 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // DOM-IGNORE-END
 
 #include "app.h"
+
 /*TODO For Graphics stack
        #include "TouchScreen.h"
 */
 
 
-
-// ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
-// ****************************************************************************
+// DEVCFG3
+// TODO: figure out what may be needed here
+// a bunch of unused as of yet stuff
 
-/*
- System PLL Output Clock Divider (FPLLODIV)     = Divide by 1
- PLL Multiplier (FPLLMUL)                       = Multiply by 20
- PLL Input Divider (FPLLIDIV)                   = Divide by 2
- Watchdog Timer Enable (FWDTEN)                 = Disabled
- Clock Switching and Monitor Selection (FCKSM)  = Clock Switch Enable,
-                                                  Fail Safe Clock Monitoring Enable
- Peripheral Clock Divisor (FPBDIV)              = Divide by 2
- */
+// DEVCFG2
+#pragma config UPLLEN       = OFF
+#pragma config UPLLFSEL     = FREQ_24MHZ
+#pragma config FPLLODIV     = DIV_2
+#pragma config FPLLMULT     = MUL_50
+#pragma config FPLLICLK     = PLL_FRC
+#pragma config FPLLRNG      = RANGE_5_10_MHZ
+#pragma config FPLLIDIV     = DIV_1
 
-// TODO configure the correct configuration fuse settings for your part
+// DEVCFG1
+#pragma config FDMTEN       = OFF       // Toggles DeadMan Timer0
+//DMTCNT = No Setting
+#pragma config FWDTWINSZ    = WINSZ_25
+#pragma config FWDTEN       = OFF
+#pragma config WINDIS       = NORMAL
+#pragma config WDTSPGM      = STOP
+#pragma config WDTPS        = PS1048576
+#pragma config FCKSM        = CSECMD
+#pragma config OSCIOFNC     = ON
+#pragma config POSCMOD      = OFF
+#pragma config IESO         = OFF
+#pragma config FSOSCEN      = OFF
+#pragma config DMTINTV      = WIN_127_128
+#pragma config FNOSC        = SPLL
 
+// DEVCFG0
+#pragma config EJTAGBEN     = NORMAL
+#pragma config DBGPER       = ALLOW_PG2
+#pragma config FSLEEP       = OFF
+#pragma config FECCCON      = OFF_UNLOCKED
+#pragma config BOOTISA      = MIPS32
+#pragma config TRCEN        = ON
+#pragma config ICESEL       = ICS_PGx2
+//#pragma config JTAGEN       = ON
+#pragma config DEBUG        = ON
 
-//End of configuration bits settings
+// DEVCP0
+#pragma config CP           = OFF       // Toggles copy protection on flash memory
 
 /*TODO Configuration Tool would add below For Graphics stack
           void CheKseg0CacheOn(void);
@@ -88,8 +113,24 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
+/*
+DRV_USART_INIT usartInit = NULL;
+SYS_MODULE_OBJ objectHandle;
 
-
+usartInit.baud                = 115200;
+usartInit.mode                = DRV_USART_OPERATION_MODE_ADDRESSED;
+usartInit.flags               = DRV_USART_INIT_FLAG_NONE;
+usartInit.usartID             = USART_ID_2;
+usartInit.brgClock            = 80000000;
+usartInit.handshake           = DRV_USART_HANDSHAKE_NONE;
+usartInit.lineControl         = DRV_USART_LINE_CONTROL_8NONE1;
+usartInit.interruptError      = INT_SOURCE_USART_2_ERROR;
+usartInit.interruptReceive    = INT_SOURCE_USART_2_RECEIVE;
+usartInit.queueSizeReceive    = 2;
+usartInit.queueSizeTransmit   = 3;
+usartInit.interruptTransmit   = INT_SOURCE_USART_2_TRANSMIT;
+usartInit.moduleInit.value    = SYS_MODULE_POWER_RUN_FULL;
+*/
 
 // ****************************************************************************
 // ****************************************************************************
@@ -149,6 +190,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 void SYS_Initialize ( void* data )
 {
+   SYS_INT_Initialize();
    /* Initialize the BSP */
    //BSP_Initialize ( );
 
