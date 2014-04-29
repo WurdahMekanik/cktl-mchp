@@ -1,19 +1,19 @@
 /*******************************************************************************
-  MPLAB Harmony Application 
-  
+  MPLAB Harmony Demo Configuration Header
+
   Company:
     Microchip Technology Inc.
-  
+
   File Name:
-    app.c
+    system_config.h
 
   Summary:
-    Application Template
+    Top-level configuration header file.
 
   Description:
-    This file contains the application logic.
- *******************************************************************************/
-
+    This file is the top-level configuration header for the Harmony Demo
+    application for the Explorer-16 board with PIC32MX795F512L.
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -37,123 +37,125 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
+*******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef _SYS_CONFIG_H
+#define _SYS_CONFIG_H
+
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files 
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include "app.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Global Variable Definitions
-// *****************************************************************************
-// *****************************************************************************
-
-
-/*****************************************************
- * Initialize the application data structure. All
- * application related variables are stored in this
- * data structure.
- *****************************************************/
-
-APP_DATA appData = 
-{
-   //TODO - Initialize appData structure.
-
-};
-// *****************************************************************************
-/* Driver objects.
-
-  Summary:
-    Contains driver objects.
-
-  Description:
-    This structure contains driver objects returned by the driver init routines
-    to the application. These objects are passed to the driver tasks routines.
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
-
-
-APP_DRV_OBJECTS appDrvObject;
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Local Routines
-// *****************************************************************************
-// *****************************************************************************
-
+#define USE_MEBII
+#include "bsp_config.h"
+//#include "bsp/gfx/meb/meb2/bsp_config.h"
+//#include "bsp/gfx/meb/meb2/display/wqvga/bsp_config.h"
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Application Callback Routines
+// Section: Application Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+//PICTail
+#define MEB_2_BOARD
+
+//PIC Interface
+#define PIC_SK
+
+//Graphics Controller
+#define GFX_USE_DISPLAY_CONTROLLER_LCC
+
+//Graphics Library
+#define USE_TOUCHSCREEN
+#define USE_MULTIBYTECHAR
+#define GFX_LIB_CFG_USE_GOL
+
+//Display
+#define GFX_USE_DISPLAY_PANEL_PH480272T_005_I11Q
+
+//LCC Specific
+#define LCC_EXTERNAL_MEMORY
+
+// GOL... i think?
+#define IMG_SUPPORT_JPEG
+#define USE_ALPHABLEND_LITE
+#define GFX_CONFIG_ALPHABLEND_DISABLE
+#define GFX_CONFIG_IMAGE_EXTERNAL_DISABLE
+#define GFX_CONFIG_FONT_ANTIALIASED_DISABLE
+#define USE_COMP_RLE
+#define GFX_CONFIG_COLOR_DEPTH              (16)
+#define GFX_CONFIG_FONT_CHAR_SIZE           (8)
+#define GFX_CONFIG_PALETTE_DISABLE
+#define GFX_CONFIG_FOCUS_DISABLE
+#define GFX_CONFIG_FONT_EXTERNAL_DISABLE
+#define GFX_malloc(size)                    malloc(size)
+#define GFX_free(pObj)                      free(pObj)      // <COPY GFX_malloc>
+#define GFX_GOL_FOCUS_LINE  2
+#define GFX_GOL_EMBOSS_SIZE 3
+
+// INTERRUPT
+#define INT_IRQ_MAX  5
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
 
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: System Clock Service Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define SYS_CLK_FREQUENCY                       (200000000ul)
+#define PB_FREQUENCY                            SYS_CLK_FREQUENCY/20
+#define APP_LED                                 LED_3
+#define SPI_ID                                  SPI_ID_2
+#define UART_BAUD                               115200
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Initialization and State Machine
-// *****************************************************************************
-// *****************************************************************************
+/*
+#define SYS_CLK_FREQUENCY                 (80000000L)
+#define SYS_CLK_CONFIG_PRIMARY_XTAL       80000000L
+#define SYS_CLK_CONFIG_SECONDARY_XTAL     80000000
+#define SYS_CLK_CONFIG_FREQ_ERROR_LIMIT   10
+#define SYS_CLK_CONFIG_SYSPLL_INP_DIVISOR 2
 
-/******************************************************************************
-  Function:
-    void APP_Initialize ( void )
+#define SYS_CLK_CONFIGBIT_USBPLL_DIVISOR  2
+#define SYS_CLK_CONFIGBIT_USBPLL_ENABLE   true
 
-  Remarks:
-    See prototype in app.h.
+#define SYS_CLK_CONFIG_SYSPLL_OP_DIVISOR  1
+#define SYS_CLK_ON_WAIT_IDLE              1
+#define SYS_CLK_ON_WAIT_SLEEP             0
+#define SYS_CLK_EXTERNAL_CLOCK            4000000
+#define SYS_CLK_USB_FIXED_DIVISOR         2
+#define SYS_CLK_USB_FIXED_PLL_MULTIPLIER  24
  */
 
-void APP_Initialize ( void )
-{
-   /* TODO: Initialize your application's state machine and other
-    * parameters.
-    */
-
-   /* Place the App state machine in its initial state. */
-   appData.state = APP_STATE_INIT;
-
-   appData.ignoreSwitchPress = false;
-
-   appData.isSwitchPressed = false;
-   
-}
-
-/********************************************************
- * Application switch press routine
- ********************************************************/
+// *****************************************************************************
+// *****************************************************************************
+// Section: System Timer Service Configuration
+// *****************************************************************************
+// *****************************************************************************
 
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: OSAL Configuration
+// *****************************************************************************
+// *****************************************************************************
 
-/**********************************************************
- * Application tasks routine. This function implements the
- * application state machine.
- ***********************************************************/
-void APP_Tasks ( void )
-{
-   /* check the application state*/
-   switch ( appData.state )
-   {
-      /* Application's initial state. */
-      case APP_STATE_INIT:
-         break;
-         
-      // TODO implement your application state machine
-      /* The default state should never be executed. */
-      default:
-         /* TODO: Handle error in application's state machine. */
-         break;
-   }
-   
-} 
 
+#endif // _SYS_CONFIG_H
 /*******************************************************************************
  End of File
- */
+*/
 

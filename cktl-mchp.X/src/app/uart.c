@@ -1,20 +1,27 @@
 /*******************************************************************************
- System Tasks File
+  MPLAB Harmony UART Functions
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    sys_tasks.c
+    uart.c
 
   Summary:
-    System tasks File.
+    MPLAB Harmony simple_uart function source file
 
   Description:
-    This file will contain any source code necessary to maintain various tasks
-    in the system.
- *******************************************************************************/
+    Contains basic functions to write characters and strings to the UART module.
+
+  Tested with:
+    -PIC32MX795F512L on the Explorer-16 Demo Board
+    -PIC32MZ Embedded Connectivity (EC) Starter Kit and MEB II
+    -XC32 compiler, MPLAB X IDE
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2011-2012 released Microchip Technology Inc.  All rights reserved.
+Copyright (c) 2013 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
@@ -24,7 +31,7 @@ controller that is integrated into your product or third party product
 You should refer to the license agreement accompanying this Software for
 additional information regarding your rights and obligations.
 
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
+SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
 MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
 IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
@@ -37,65 +44,64 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 *******************************************************************************/
 // DOM-IGNORE-END
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+#include <xc.h>
 #include "app.h"
+#include "uart.h"
+#include "peripheral/usart/plib_usart.h"
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System "Tasks" Routine
-// *****************************************************************************
-// *****************************************************************************
 /*******************************************************************************
+/*
   Function:
-    void SYS_Tasks ( void )
+    void WriteString (const char *string)
 
   Summary:
-    Calls all module-specific "tasks" routines to maintain module state
-
-  Description:
-    This routine calls all module-specific "tasks" routines to maintain module
-    state.
-
-  Precondition:
-    SYS_Initialize has been called
-
-  Parameters:
-    None.
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    int main ( void )
-    {
-        SYS_Initialize(&initData);
-
-        while (true)
-        {
-            SYS_Tasks();
-        }
-    }
-    </code>
-
-  Remarks:
-    When not using the dynamic system "Tasks" service, this routine must be
-    implemented by the application's system configuration (in the application's
-    configuration-specific "sys_tasks.c" file).
- */
-
-void SYS_Tasks ( void )
+    Writes a string to the console
+*/
+void WriteString(const char *string)
 {
-   /* TODO: Call the application's tasks routine */
-   APP_Tasks(/*&appData*/);
+   PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
+   BSP_SwitchONLED(LED_4);
+   while (*string != '\0')
+   {
+      /* Send character */
+      PLIB_USART_TransmitterByteSend(USART_ID_2, *string);
+
+      /* Increment to address of next character */
+      string++;
+
+      /* Wait for the transmit shift register to empty (transfer completed) */
+      while (!PLIB_USART_TransmitterIsEmpty(USART_ID_2));
+   }
+}
+
+
+/*******************************************************************************
+/*
+  Function:
+    void PutCharacter (const char character)
+
+  Summary:
+    Sends a character to the console
+*/
+void PutCharacter(const char character)
+{
+   PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
+   BSP_SwitchONLED(LED_4);
+   /* Send character */
+   PLIB_USART_TransmitterByteSend(USART_ID_2, character);
+
+   /* Wait for the transmit shift register to empty (transfer completed) */
+   while (!PLIB_USART_TransmitterIsEmpty(USART_ID_2));
 }
 
 
 /*******************************************************************************
  End of File
 */
+

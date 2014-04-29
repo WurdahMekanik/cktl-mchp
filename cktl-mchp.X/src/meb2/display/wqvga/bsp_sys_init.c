@@ -1,23 +1,22 @@
 /*******************************************************************************
- System Interrupt Source File
+ Board initialization file for PIC32 WQVGA PCAP Display Board
 
-  Company:
+ Company:
     Microchip Technology Inc.
-  
-  File Name:
-    system_interrupt.c
 
-  Summary:
-    Raw ISR definitions.
+ File Name:
+    bsp_sys_init.c
 
-  Description:
-    This file contains a definitions of the raw ISRs required to support the
-    interrupt sub-system.
+ Summary:
+    Board initialization file for PIC32 WQVGA PCAP Display Board
+
+ Description:
+    This file contains the initialization of board specific I/O.
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2011-2012 released Microchip Technology Inc.  All rights reserved.
+Copyright (c) 2014 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
@@ -37,39 +36,47 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
+*******************************************************************************/
 // DOM-IGNORE-END
 
-#include <xc.h>
-#include <sys/attribs.h>
-#include "app.h"
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
+
+#include "bsp_config.h"
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interrupt Service Routines (ipl1=LOW...ipl7=HIGH)
+// *****************************************************************************
+// Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
-void __ISR (_UART2_RX_VECTOR, ipl7) _InterruptHandler_RS485(void)
-{
-   /* TODO: Fill in RS485 interrupt handler */
-}
 
-/*
-void __ISR (_CORE_TIMER_VECTOR,ipl3) _InterruptHandle_CoreTimer(void)
-{
-    SYS_INT_SourceDisable(INT_SOURCE_TIMER_CORE);
-    SYS_INT_SourceStatusClear(INT_SOURCE_TIMER_CORE);
+/*******************************************************************************
+  Function: void BSP_Initialize(void)
 
-    appData.ignoreSwitchPress = false;
-    if(BSP_ReadSwitch(SWITCH_1) == BSP_SWITCH_STATE_PRESSED)
-    {
-        // This means this is a valid switch press
-        appData.isSwitchPressed = true;
-    }
-}
+  Summary:
+    Performs the neccassary actions to initialize a board
+
+  Description:
+    This routine performs the neccassary actions to initialize a board
+
+  Remarks:
+    This routine performs direct register accesses, when the PORTS PLIB and
+    system service become available, these register accesses will be be replaced
+    by the PLIB\system service interfaces.
+
 */
+
+void BSP_Initialize(void)
+{
+
+
+}
 
 
 /*******************************************************************************
  End of File
- */
+*/

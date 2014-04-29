@@ -1,19 +1,19 @@
 /*******************************************************************************
-  MPLAB Harmony Demo Configuration Header
-
+  MPLAB Harmony Application 
+  
   Company:
     Microchip Technology Inc.
-
+  
   File Name:
-    system_config.h
+    app.c
 
   Summary:
-    Top-level configuration header file.
+    Application Template
 
   Description:
-    This file is the top-level configuration header for the Harmony Demo
-    application for the Explorer-16 board with PIC32MX795F512L.
-*******************************************************************************/
+    This file contains the application logic.
+ *******************************************************************************/
+
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -37,135 +37,134 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _SYS_CONFIG_H
-#define _SYS_CONFIG_H
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files 
+// *****************************************************************************
+// *****************************************************************************
+#include "app.h"
+#include "system/system.h"
+#include "system/debug/sys_debug.h"
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Global Variable Definitions
+// *****************************************************************************
+// *****************************************************************************
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files
+// Section: Application Variables
 // *****************************************************************************
 // *****************************************************************************
-/*  This section Includes other configuration headers necessary to completely
-    define this configuration.
+char txData[] = "Testing 8-bit SPI!";
+char rxData[sizeof(txData)];
+static uint32_t txDataSize = sizeof(txData);
+static uint32_t dataIndex = 0;
+
+// *****************************************************************************
+/* Application Data
+
+  Summary:
+    Contains application data
+
+  Description:
+    This structure contains application data.
 */
 
-#include "bsp/sk_pic32_mz/bsp_config.h"
-#include "bsp/gfx/meb/meb2/bsp_config.h"
-#include "bsp/gfx/meb/meb2/display/wqvga/bsp_config.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-//PICTail
-#define MEB_2_BOARD
-
-//PIC Interface
-#define PIC_SK
-
-//Graphics Controller
-#define GFX_USE_DISPLAY_CONTROLLER_LCC
-
-//Graphics Library
-#define USE_TOUCHSCREEN
-#define USE_MULTIBYTECHAR
-#define GFX_LIB_CFG_USE_GOL
-
-//Display
-#define GFX_USE_DISPLAY_PANEL_PH480272T_005_I11Q
-
-//LCC Specific
-#define LCC_EXTERNAL_MEMORY
-
-// GOL... i think?
-#define IMG_SUPPORT_JPEG
-#define USE_ALPHABLEND_LITE
-#define GFX_CONFIG_ALPHABLEND_DISABLE
-#define GFX_CONFIG_IMAGE_EXTERNAL_DISABLE
-#define GFX_CONFIG_FONT_ANTIALIASED_DISABLE
-#define USE_COMP_RLE
-#define GFX_CONFIG_COLOR_DEPTH              (16)
-#define GFX_CONFIG_FONT_CHAR_SIZE           (8)
-#define GFX_CONFIG_PALETTE_DISABLE
-#define GFX_CONFIG_FOCUS_DISABLE
-#define GFX_CONFIG_FONT_EXTERNAL_DISABLE
-#define GFX_malloc(size)                    malloc(size)
-#define GFX_free(pObj)                      free(pObj)      // <COPY GFX_malloc>
-#define GFX_GOL_FOCUS_LINE  2
-#define GFX_GOL_EMBOSS_SIZE 3
-
-// INTERRUPT
-#define INT_IRQ_MAX  5
+APP_DATA appObject;
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Driver Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-// USART
-#include "drv_usart_config.h"
-
-
-// SPI
-#define DRV_SPI_INSTANCES_NUMBER             2
-#define DRV_SPI_CLIENTS_NUMBER               2
-#define DRV_SPI_INTERRUPT_MODE               true
-#define DRV_SPI_PORTS_REMAP_USAGE            false
-#define DRV_SPI_BUFFER_SIZE                  64
-#define DRV_SPI_FRAME_SYNC_PULSE_DIRECTION   SPI_FRAME_PULSE_DIRECTION_INPUT
-#define DRV_SPI_FRAME_SYNC_PULSE_POLARITY    SPI_FRAME_PULSE_POLARITY_ACTIVE_HIGH
-#define DRV_SPI_FRAME_SYNC_PULSE_EDGE        SPI_FRAME_PULSE_EDGE_COINCIDES_FIRST_BIT_CLOCK
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Clock Service Configuration
-// *****************************************************************************
-// *****************************************************************************
-#define SYS_CLK_CONFIG_PRIMARY_XTAL       80000000L
-#define SYS_CLK_CONFIG_SECONDARY_XTAL     80000000
-#define SYS_CLK_CONFIG_FREQ_ERROR_LIMIT   10
-#define SYS_CLK_CONFIG_SYSPLL_INP_DIVISOR 2
-
-#define SYS_CLK_CONFIGBIT_USBPLL_DIVISOR  2
-#define SYS_CLK_CONFIGBIT_USBPLL_ENABLE   true
-
-#define SYS_CLK_CONFIG_SYSPLL_OP_DIVISOR  1
-#define SYS_CLK_ON_WAIT_IDLE              1
-#define SYS_CLK_ON_WAIT_SLEEP             0
-#define SYS_CLK_EXTERNAL_CLOCK            4000000
-#define SYS_CLK_USB_FIXED_DIVISOR         2
-#define SYS_CLK_USB_FIXED_PLL_MULTIPLIER  24
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Timer Service Configuration
-// *****************************************************************************
-// *****************************************************************************
-#define DRV_TMR_COUNT_WIDTH         32
-#define SYS_TMR_MAX_PERIODIC_EVENTS 4
-#define DRV_TMR_INDEX               0
-#define DRV_TMR_INTERRUPT_MODE      0
-#define DRV_TMR_INSTANCES_NUMBER    4
-#define DRV_TMR_CLIENTS_NUMBER      4
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: OSAL Configuration
+// Section: Application Local Routines
 // *****************************************************************************
 // *****************************************************************************
 
 
-#endif // _SYS_CONFIG_H
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Callback Routines
+// *****************************************************************************
+// *****************************************************************************
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Initialization and State Machine
+// *****************************************************************************
+// *****************************************************************************
+
+/******************************************************************************
+  Function:
+    void APP_Initialize ( void )
+
+  Remarks:
+    See prototype in app.h.
+*/
+
+void APP_Initialize ( void )
+{
+   /* Put the application into its initial state */
+   appObject.state = USART_ENABLE;
+}
+
+/******************************************************************************
+  Function:
+    void APP_Tasks ( void )
+
+  Remarks:
+    See prototype in app.h.
+ */
+
+void APP_Tasks(void)
+{
+   if (PLIB_USART_TransmitterIsEmpty(USART_ID_2))
+   {
+      PLIB_PORTS_PinClear( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
+      BSP_SwitchOFFLED(LED_4);
+      BSP_SwitchOFFLED(LED_5);
+   }
+   switch (appObject.state)
+   {
+      case USART_ENABLE:
+         usartIntTriggered = 0;
+         BSP_SwitchONLED(LED_1);
+         /* Enable the UART module*/
+         PLIB_USART_Enable(USART_ID_2);
+         appObject.state =  USART_TRANSMIT;
+         break;
+
+      case USART_TRANSMIT:
+         WriteString("BLAH \n");
+         appObject.state = USART_RECEIVE_DONE;
+         BSP_SwitchONLED(LED_2);
+         break;
+
+      case USART_RECEIVE_DONE:
+         if ( BSP_ReadSwitch(SWITCH_S1) )//|| BSP_ReadSwitch(mTouch_1) || BSP_ReadSwitch(mTouch_2) )
+         {
+            BSP_SwitchOFFLED(LED_2);
+            BSP_SwitchOFFLED(LED_3);
+            usartIntTriggered = 0;
+            appObject.state = USART_TRANSMIT;
+         }
+         if (usartIntTriggered)
+            BSP_SwitchONLED(LED_3);
+         break;
+
+      default:
+         SYS_DEBUG (SYS_ERROR_FATAL,"ERROR! Invalid state\r\n");
+         while (1);
+   }
+}
+
 /*******************************************************************************
  End of File
-*/
+ */
 

@@ -4,26 +4,32 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="app" displayName="app" projectFiles="true">
+        <itemPath>src/app/app.h</itemPath>
+        <itemPath>src/app/uart.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
-        <logicalFolder name="f1" displayName="driver" projectFiles="true">
-          <logicalFolder name="usart" displayName="usart" projectFiles="true">
-            <logicalFolder name="config" displayName="config" projectFiles="true">
-              <itemPath>drv_usart_config.h</itemPath>
-            </logicalFolder>
-            <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/drv_usart.h</itemPath>
-          </logicalFolder>
-        </logicalFolder>
         <logicalFolder name="f2" displayName="system" projectFiles="true">
-          <logicalFolder name="int" displayName="int" projectFiles="true">
+          <logicalFolder name="devcon" displayName="devcon" projectFiles="true">
             <logicalFolder name="config" displayName="config" projectFiles="true">
+              <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/config/sys_devcon_config.h</itemPath>
+              <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/config/sys_devcon_config_template.h</itemPath>
             </logicalFolder>
+            <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/sys_devcon.h</itemPath>
+            <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/src/sys_devcon_local.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="int" displayName="int" projectFiles="true">
             <itemPath>C:/microchip/harmony/v0_80b/framework/system/int/sys_int.h</itemPath>
+            <itemPath>C:/microchip/harmony/v0_80b/framework/system/int/sys_int_mapping.h</itemPath>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>src/app.h</itemPath>
-      <itemPath>src/GraphicsConfig.h</itemPath>
-      <itemPath>C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.h</itemPath>
+      <logicalFolder name="system_config"
+                     displayName="system_config"
+                     projectFiles="true">
+        <itemPath>src/system_config/system_config.h</itemPath>
+        <itemPath>src/system_config/bsp_config.h</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -32,37 +38,17 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="app" projectFiles="true">
-        <logicalFolder name="fsystem_config"
-                       displayName="system_config"
-                       projectFiles="true">
-          <itemPath>C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_config.c</itemPath>
-          <itemPath>C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_init.c</itemPath>
-          <itemPath>C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_interrupt.c</itemPath>
-          <itemPath>C:/Users/agutowski/Documents/MPLABXProjects/cktl-mchp/cktl-mchp.X/system_tasks.c</itemPath>
-        </logicalFolder>
-        <itemPath>src/main.c</itemPath>
-        <itemPath>app.c</itemPath>
+      <logicalFolder name="app" displayName="app" projectFiles="true">
+        <itemPath>src/app/app.c</itemPath>
+        <itemPath>src/app/main.c</itemPath>
+        <itemPath>src/app/uart.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="framework" projectFiles="true">
-        <logicalFolder name="f1" displayName="driver" projectFiles="true">
-          <logicalFolder name="usart" displayName="usart" projectFiles="true">
-            <logicalFolder name="src" displayName="src" projectFiles="true">
-              <logicalFolder name="dynamic" displayName="dynamic" projectFiles="true">
-                <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart.c</itemPath>
-                <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue.c</itemPath>
-                <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_buffer_queue_dma.c</itemPath>
-                <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_byte_model.c</itemPath>
-                <itemPath>C:/microchip/harmony/v0_80b/framework/driver/usart/src/dynamic/drv_usart_read_write.c</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-          </logicalFolder>
-        </logicalFolder>
         <logicalFolder name="f2" displayName="system" projectFiles="true">
-          <logicalFolder name="common" displayName="common" projectFiles="true">
+          <logicalFolder name="devcon" displayName="devcon" projectFiles="true">
             <logicalFolder name="src" displayName="src" projectFiles="true">
-              <itemPath>C:/microchip/harmony/v0_80b/framework/system/common/src/sys_buffer.c</itemPath>
-              <itemPath>C:/microchip/harmony/v0_80b/framework/system/common/src/sys_queue.c</itemPath>
+              <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/src/sys_devcon.c</itemPath>
+              <itemPath>C:/microchip/harmony/v0_80b/framework/system/devcon/src/sys_devcon_pic32mz.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="int" displayName="int" projectFiles="true">
@@ -70,12 +56,16 @@
               <itemPath>C:/microchip/harmony/v0_80b/framework/system/int/src/sys_int_pic32.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="ports" displayName="ports" projectFiles="true">
-            <logicalFolder name="src" displayName="src" projectFiles="true">
-              <itemPath>C:/microchip/harmony/v0_80b/framework/system/ports/src/sys_ports.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
         </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="system_config"
+                     displayName="system_config"
+                     projectFiles="true">
+        <itemPath>src/system_config/system_config.c</itemPath>
+        <itemPath>src/system_config/system_init.c</itemPath>
+        <itemPath>src/system_config/system_interrupt.c</itemPath>
+        <itemPath>src/system_config/system_tasks.c</itemPath>
+        <itemPath>src/system_config/bsp_sys_init.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -87,6 +77,9 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>C:/microchip/harmony/v0_80b/framework</Elem>
+    <Elem>C:/microchip/harmony/v0_80b/bsp/pic32mz_esk</Elem>
+    <Elem>C:/microchip/harmony/v0_80b/bsp/pic32mz_esk_mebii</Elem>
+    <Elem>C:/microchip/harmony/v0_80b/bsp/sk_pic32_mz</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -129,16 +122,16 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value=".;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\peripheral;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\driver;..\..\..\..\..\..\microchip\harmony\v0_80b\bsp;..\..\..\..\..\..\microchip\harmony\v0_80b\framework;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\system;..\..\..\..\..\..\microchip\harmony\v0_80b;src\sysconfig;src"/>
+                  value=".;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\peripheral;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\driver;..\..\..\..\..\..\microchip\harmony\v0_80b\bsp;..\..\..\..\..\..\microchip\harmony\v0_80b\framework;..\..\..\..\..\..\microchip\harmony\v0_80b\framework\system;..\..\..\..\..\..\microchip\harmony\v0_80b;src;src\app;src\system_config"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
-        <property key="optimization-level" value=""/>
+        <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros" value="_OPTIMIZE_"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="use-cci" value="false"/>
@@ -146,6 +139,22 @@
         <property key="use-indirect-calls" value="false"/>
       </C32>
       <C32-AS>
+        <property key="assembler-symbols" value=""/>
+        <property key="enable-symbols" value="true"/>
+        <property key="exclude-floating-point-library" value="false"/>
+        <property key="expand-macros" value="false"/>
+        <property key="extra-include-directories-for-assembler" value=""/>
+        <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="false-conditionals" value="false"/>
+        <property key="keep-locals" value="false"/>
+        <property key="list-assembly" value="false"/>
+        <property key="list-source" value="false"/>
+        <property key="list-symbols" value="false"/>
+        <property key="oXC32asm-list-to-file" value="false"/>
+        <property key="omit-debug-dirs" value="false"/>
+        <property key="omit-forms" value="false"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="warning-level" value=""/>
       </C32-AS>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
@@ -193,7 +202,7 @@
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
-        <property key="optimization-level" value=""/>
+        <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
