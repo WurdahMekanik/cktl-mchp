@@ -65,9 +65,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // DEVCFG3
 #pragma config FUSBIDIO    = OFF             // USB USBID Selection
-#pragma config IOL1WAY     = ON              // Peripheral Pin Select Configuration
-#pragma config PMDL1WAY    = ON              // Peripheral Module Disable Configuration
-#pragma config PGL1WAY     = ON              // Permission Group Lock One Way Configuration
+#pragma config IOL1WAY     = ON              // One-time Peripheral Pin Select Configuration
+#pragma config PMDL1WAY    = ON              // One-time Peripheral Module Disable Configuration
+#pragma config PGL1WAY     = ON              // One-time Permission Group Lock One Way Configuration
 #pragma config FETHIO      = ON              // Ethernet I/O Pin Select
 #pragma config FMIIEN      = ON              // Ethernet RMII/MII Enable
 //#pragma config USERID = No Setting
@@ -77,9 +77,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config UPLLFSEL    = FREQ_24MHZ      // USB PLL Input Frequency Selection
 #pragma config FPLLODIV    = DIV_2           // System PLL Output Divider
 #pragma config FPLLMULT    = MUL_50          // System PLL Multiplier
-#pragma config FPLLICLK    = PLL_FRC         // System PLL Input Clock Selection
-#pragma config FPLLRNG     = RANGE_5_10_MHZ  // System PLL Input Range
-#pragma config FPLLIDIV    = DIV_1           // System PLL Input Divider
+#pragma config FPLLICLK    = PLL_POSC        // System PLL Input Clock Selection
+#pragma config FPLLRNG     = RANGE_8_16_MHZ  // System PLL Input Range
+#pragma config FPLLIDIV    = DIV_3           // System PLL Input Divider
 
 // DEVCFG1
 #pragma config FDMTEN      = OFF             // Deadman Timer Enable
@@ -89,7 +89,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config WINDIS      = NORMAL          // Watchdog Timer Window Mode
 #pragma config WDTSPGM     = STOP            // Watchdog Timer Stop During Flash Programming
 #pragma config WDTPS       = PS1048576       // Watchdog Timer Postscaler
-#pragma config FCKSM       = CSECME          // Clock Switching & Monitor Selection
+#pragma config FCKSM       = CSDCMD          // Clock Switching & Monitor Selection
 #pragma config OSCIOFNC    = ON              // CLKO Output Enable
 #pragma config POSCMOD     = EC              // Primary Oscillator Configuration
 #pragma config IESO        = OFF             // Internal/External Switch Over
@@ -109,7 +109,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config DEBUG       = ON              // Background Debugger Enable
 
 // DEVCP0
-#pragma config CP = OFF                   // Code Protect Enable
+#pragma config CP = OFF                      // Code Protect Enable
 
 
 // *****************************************************************************
@@ -120,6 +120,54 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 SYS_DEVCON_INIT devconInit =
 {
     .moduleInit = {0},
+};
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Driver Initialization Data
+// *****************************************************************************
+// *****************************************************************************
+
+const DRV_SPI_INIT drvSPIInit =
+{
+   .moduleInit.sys.powerState = SYS_MODULE_POWER_RUN_FULL,
+   .spiId                     = SPI_ID_2,
+   .spiMode                   = DRV_SPI_MODE_MASTER,
+   .spiProtocolType           = DRV_SPI_PROTOCOL_TYPE_STANDARD,
+   .commWidth                 = SPI_COMMUNICATION_WIDTH_8BITS,
+   .baudRate                  = 200000,
+   .bufferType                = DRV_SPI_BUFFER_TYPE_STANDARD,
+   .rxInterruptMode           = 0,
+   .txInterruptMode           = 0,
+   .clockMode                 = DRV_SPI_CLOCK_MODE_IDLE_LOW_EDGE_FALL,
+   //.clockMode                 = DRV_SPI_CLOCK_MODE_IDLE_HIGH_EDGE_FALL,
+   .inputSamplePhase          = SPI_INPUT_SAMPLING_PHASE_AT_END,
+   .txInterruptSource         = INT_SOURCE_SPI_2_TRANSMIT,
+   .rxInterruptSource         = INT_SOURCE_SPI_2_RECEIVE,
+   .errInterruptSource        = INT_SOURCE_SPI_2_ERROR,
+};
+
+const DRV_SDCARD_INIT drvSDCARDInit =
+{
+   .writeProtectPort          = PORT_CHANNEL_F,
+   .writeProtectBitPosition   = PORTS_BIT_POS_1,
+   .cardDetectPort            = PORT_CHANNEL_J,
+   .cardDetectBitPosition     = PORTS_BIT_POS_5,
+   .chipSelectPort            = PORT_CHANNEL_B,
+   .chipSelectBitPosition     = PORTS_BIT_POS_14,
+   //.sdcardSpeedHz             = 25000000,   // for very fast cards
+   .sdcardSpeedHz             = 20000000,   // for faster cards
+   //.sdcardSpeedHz             = 2000000,    // for not so fast cards
+   .spiId = SPI_ID_2,
+};
+
+/* Initialization structure for sys_fs layer */
+const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+{
+   {
+      .nativeFileSystemType      = FAT,
+      .nativeFileSystemFunctions = &FatFsFunctions
+   }
 };
 
 // *****************************************************************************
@@ -185,39 +233,72 @@ SYS_DEVCON_INIT devconInit =
 void SYS_Initialize ( void* data )
 {
    /* Set up cache and wait states for maximum performance. */
-   appObject.sysDevconObject = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0,
-                                                     (SYS_MODULE_INIT*)&devconInit);
-
+   appDrvObj.sysDevconObj = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*)&devconInit);
    SYS_DEVCON_PerformanceConfig(SYS_CLK_FREQUENCY);
 
+   /* Initializes hardware and internal data structure for the general features
+    of the clock. */
+   SYS_CLK_Initialize(NULL);
+
+   /* Initialize the BSP */
    BSP_Initialize();
 
-   /* PPS setup */
-   PLIB_PORTS_RemapOutput(PORTS_ID_0,OTPUT_FUNC_U2TX,OUTPUT_PIN_RPB14);
-   PLIB_PORTS_RemapInput(PORTS_ID_0,INPUT_FUNC_U2RX,INPUT_PIN_RPG6);
+   /* Initialize the interrupt system  */
+   SYS_INT_Initialize();
+
+   /* Map USART pins*/
+   PLIB_PORTS_RemapOutput(PORTS_ID_0, OTPUT_FUNC_U2TX, OUTPUT_PIN_RPB14);
+   PLIB_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_U2RX, INPUT_PIN_RPG6);
    ANSELGbits.ANSG6 = 0;
    ANSELBbits.ANSB14 = 0;
 
-   /* Set PBCLK2 to 200MHz (feeds into USART peripheral) */
-   PLIB_OSC_PBClockDivisorSet(OSC_ID_0,OSC_PERIPHERAL_BUS_2,(OSC_PB_CLOCK_DIV_TYPE)0x01);
+   /* Remap the SPI pins */
+   SYS_PORTS_RemapOutput(PORTS_ID_0, OTPUT_FUNC_SDO2, OUTPUT_PIN_RPG8);
+   SYS_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_SDI2, INPUT_PIN_RPD7);
+   ANSELGbits.ANSG8 = 0;
 
-   /* Configure the baud rate, 8-N-1 data mode, enable TX/RX pins, generate interrupts when
-      the receiver buffer has data */
+   /* Set PBCLK2 = SYSCLK/2 (feeds into USART peripheral) */
+   PLIB_OSC_PBClockDivisorSet(OSC_ID_0, OSC_PERIPHERAL_BUS_2, 2);
+   PLIB_OSC_PBOutputClockEnable(OSC_ID_0, OSC_PERIPHERAL_BUS_2);
+
+   /* Configure the baud rate, 8-N-1 data mode, enable TX/RX pins,
+    * and generate interrupts when the receiver buffer has data */
    PLIB_USART_BaudRateSet(USART_ID_2, SYS_CLK_FREQUENCY/2, UART_BAUD);
    PLIB_USART_LineControlModeSelect(USART_ID_2, USART_8N1);
    PLIB_USART_TransmitterEnable(USART_ID_2);
+   /* TODO: TX INT enable... */
    PLIB_USART_ReceiverEnable(USART_ID_2);
    PLIB_USART_ReceiverInterruptModeSelect(USART_ID_2, USART_RECEIVE_FIFO_ONE_CHAR);
+   PLIB_USART_Enable(USART_ID_2);
 
    /* Enable the UART2 receiver interrupt source, set its priority level to 2,
-      set its subpriority level to 0 */
-   PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_USART_2_RECEIVE);
-   PLIB_INT_VectorPrioritySet(INT_ID_0, INT_VECTOR_UART2_RX, INT_PRIORITY_LEVEL2);
-   PLIB_INT_VectorSubPrioritySet(INT_ID_0, INT_VECTOR_UART2_RX, INT_SUBPRIORITY_LEVEL0);
+    * set its subpriority level to 0 */
+   SYS_INT_SourceEnable(INT_SOURCE_USART_2_RECEIVE);
+   SYS_INT_VectorPrioritySet(INT_VECTOR_UART2_RX, INT_PRIORITY_LEVEL7);
+   SYS_INT_VectorSubprioritySet(INT_VECTOR_UART2_RX, INT_SUBPRIORITY_LEVEL3);
+
+   /* TODO: TX INT enable... */
+
+   /* set priority for SPI interrupt source */
+   SYS_INT_VectorPrioritySet(INT_VECTOR_SPI2_TX, INT_PRIORITY_LEVEL4);
+   SYS_INT_VectorPrioritySet(INT_VECTOR_SPI2_RX, INT_PRIORITY_LEVEL4);
+
+   /* set sub-priority for SPI interrupt source */
+   SYS_INT_VectorSubprioritySet(INT_VECTOR_SPI2_TX, INT_SUBPRIORITY_LEVEL2);
+   SYS_INT_VectorSubprioritySet(INT_VECTOR_SPI2_RX, INT_SUBPRIORITY_LEVEL3);
 
    /* Enable multi-vectored interrupts, enable the generation of interrupts to the CPU */
-   PLIB_INT_MultiVectorSelect(INT_ID_0);
-   PLIB_INT_Enable(INT_ID_0);
+   /* ...aka Initialize the global interrupts */
+   SYS_INT_Enable();
+
+   /* Initialize the SPI driver */
+   appDrvObj.drvSPIObj = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPIInit);
+
+   /* Initialize the SDCARD driver*/
+   appDrvObj.drvSDCARDObj = DRV_SDCARD_Initialize(DRV_SDCARD_INDEX_0, (SYS_MODULE_INIT *)&drvSDCARDInit);
+
+   /* Initialize the SYS_FS Layer */
+   SYS_FS_Initialize( (const void *)sysFSInit );
 
 	/*TODO For Graphics Stack. In the future releases, the tool would add required initialization API's appropriately.
 
@@ -242,7 +323,6 @@ void SYS_Initialize ( void* data )
 
 		GFX_SchemeInit();
 	*/
-
 
    /* Initialize the Application */
    APP_Initialize ( );

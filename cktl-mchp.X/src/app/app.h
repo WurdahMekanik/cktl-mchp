@@ -21,6 +21,8 @@
 #ifndef _APP_HEADER_H
 #define _APP_HEADER_H
 
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -30,14 +32,20 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include <xc.h>
 #include <sys/attribs.h>
 
 #include "system_config.h"
 #include "system/system.h"
 #include "peripheral/peripheral.h"
+#include "system/int/sys_int.h"
+#include "system/ports/sys_ports.h"
 #include "system/devcon/sys_devcon.h"
-#include "bsp_config.h"
+#include "system/fs/fat_fs/src/file_system/ff.h"
+#include "system/fs/sys_fs.h"
+#include "driver/sdcard/drv_sdcard.h"
+#include "driver/spi/drv_spi.h"
 #include "uart.h"
 
 // *****************************************************************************
@@ -72,14 +80,41 @@
 
 typedef enum
 {
-    /* USART Enable State */
-    USART_ENABLE,
+   /* USART Enable State */
+   APP_START,
 
-    /* USART Transmit Status */
-    USART_TRANSMIT,
+   /* USART Transmit Status */
+   USART_TRANSMIT,
 
-    /* USART Receive State */
-    USART_RECEIVE_DONE
+	/* The app mounts the disk */
+   APP_MOUNT_DISK,
+
+	/* The app unmounts the disk */
+   APP_UNMOUNT_DISK,
+
+   /* Set the current drive */
+   APP_SET_CURRENT_DRIVE,
+
+	/* The app opens the file to read */
+   APP_OPEN_FIRST_FILE,
+
+   /* Create directory */
+   APP_CREATE_DIRECTORY,
+
+   /* The app opens the file to write */
+   APP_OPEN_SECOND_FILE,
+
+   /* The app reads from a file and writes to another file */
+   APP_READ_WRITE_TO_FILE,
+
+   /* The app closes the file*/
+   APP_CLOSE_FILE,
+
+   /* The app closes the file and idles */
+   APP_IDLE,
+
+   /* An app error has occurred */
+   APP_ERROR
 
 } APP_STATES;
 
@@ -99,13 +134,50 @@ typedef enum
 
 typedef struct
 {
-    SYS_MODULE_OBJ sysDevconObject;
+   /* Current application state */
+   APP_STATES     state;
+    
+   /* SYS_FS File handle for 1st file */
+   SYS_FS_HANDLE  fileHandle;
 
-    /* Current application state */
-    APP_STATES  state;
+   /* SYS_FS File handle for 2nd file */
+   SYS_FS_HANDLE  fileHandle1;
+   
+   /* Application data buffer */
+   uint8_t        data[1024];
+
+   uint32_t       nBytesWritten;
+
+   uint32_t       nBytesRead;
 
 } APP_DATA;
 
+
+// *****************************************************************************
+/* Driver objects.
+
+  Summary:
+    Holds driver objects.
+
+  Description:
+    This structure contains driver objects returned by the driver init routines
+    to the application. These objects are passed to the driver tasks routines.
+
+  Remarks:
+    None.
+*/
+
+typedef struct
+{
+    SYS_MODULE_OBJ              sysDevconObj;
+
+    /* SPI Driver Object  */
+    SYS_MODULE_OBJ              drvSPIObj;
+
+    /* SDCARD Media Driver Object */
+    SYS_MODULE_OBJ              drvSDCARDObj;
+
+} APP_DRV_OBJECTS;
 
 
 // *****************************************************************************
@@ -192,8 +264,11 @@ void APP_Tasks ( void );
 // Section: extern declarations
 // *****************************************************************************
 // *****************************************************************************
-extern APP_DATA appObject;
+extern APP_DATA appObj;
+extern APP_DRV_OBJECTS appDrvObj;
+
 extern bool usartIntTriggered;
+extern const uint8_t writeData[];
 
 #endif /* _APP_HEADER_H */
 

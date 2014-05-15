@@ -52,22 +52,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*  This section Includes other configuration headers necessary to completely
     define this configuration.
 */
-#define USE_MEBII
-#include "bsp_config.h"
-//#include "bsp/gfx/meb/meb2/bsp_config.h"
-//#include "bsp/gfx/meb/meb2/display/wqvga/bsp_config.h"
+
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Configuration
 // *****************************************************************************
 // *****************************************************************************
-
-//PICTail
-#define MEB_2_BOARD
-
-//PIC Interface
-#define PIC_SK
 
 //Graphics Controller
 #define GFX_USE_DISPLAY_CONTROLLER_LCC
@@ -90,25 +81,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define GFX_CONFIG_IMAGE_EXTERNAL_DISABLE
 #define GFX_CONFIG_FONT_ANTIALIASED_DISABLE
 #define USE_COMP_RLE
-#define GFX_CONFIG_COLOR_DEPTH              (16)
-#define GFX_CONFIG_FONT_CHAR_SIZE           (8)
+#define GFX_CONFIG_COLOR_DEPTH            (16)
+#define GFX_CONFIG_FONT_CHAR_SIZE         (8)
 #define GFX_CONFIG_PALETTE_DISABLE
 #define GFX_CONFIG_FOCUS_DISABLE
 #define GFX_CONFIG_FONT_EXTERNAL_DISABLE
-#define GFX_malloc(size)                    malloc(size)
-#define GFX_free(pObj)                      free(pObj)      // <COPY GFX_malloc>
-#define GFX_GOL_FOCUS_LINE  2
-#define GFX_GOL_EMBOSS_SIZE 3
+#define GFX_malloc(size)                  malloc(size)
+#define GFX_free(pObj)                    free(pObj)      // <COPY GFX_malloc>
+#define GFX_GOL_FOCUS_LINE                2
+#define GFX_GOL_EMBOSS_SIZE               3
 
 // INTERRUPT
-#define INT_IRQ_MAX  5
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Driver Configuration
-// *****************************************************************************
-// *****************************************************************************
+#define INT_IRQ_MAX                       5
 
 
 // *****************************************************************************
@@ -116,11 +100,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: System Clock Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define SYS_CLK_FREQUENCY                       (200000000ul)
-#define PB_FREQUENCY                            SYS_CLK_FREQUENCY/20
-#define APP_LED                                 LED_3
-#define SPI_ID                                  SPI_ID_2
-#define UART_BAUD                               115200
+#define SYS_CLK_FREQUENCY                 (200000000ul)
+#define APP_LED                           LED_3
+#define SPI_ID                            SPI_ID_2
+#define UART_BAUD                         115200
 
 /*
 #define SYS_CLK_FREQUENCY                 (80000000L)
@@ -140,19 +123,110 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_CLK_USB_FIXED_PLL_MULTIPLIER  24
  */
 
+/* Primary oscillator input frequency, the frequency from the crystal */
+#define SYS_CLK_CONFIG_PRIMARY_XTAL       24000000UL
+/* System PLL input divisor */
+#define SYS_CLK_CONFIG_SYSPLL_INP_DIVISOR 3
+
+#define SYS_CLK_CONFIGBIT_USBPLL_ENABLE   true
+
+#define SYS_CLK_CONFIG_FREQ_ERROR_LIMIT   10
+/* Secondary oscillator input frequency, the frequency from the crystal */
+#define SYS_CLK_CONFIG_SECONDARY_XTAL     32768UL
+
+#define SYS_CLOCK_USB_CLOCK               48000000
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Timer Service Configuration
 // *****************************************************************************
 // *****************************************************************************
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: SPI Driver Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+#define DRV_SPI_INSTANCES_NUMBER             1
+#define DRV_SPI_CLIENTS_NUMBER               1
+#define DRV_SPI_INTERRUPT_MODE               true
+#define DRV_SPI_PORTS_REMAP_USAGE            false
+#define DRV_SPI_BUFFER_SIZE                  64
+#define DRV_SPI_FRAME_SYNC_PULSE_DIRECTION   SPI_FRAME_PULSE_DIRECTION_INPUT
+#define DRV_SPI_FRAME_SYNC_PULSE_POLARITY    SPI_FRAME_PULSE_POLARITY_ACTIVE_HIGH
+#define DRV_SPI_FRAME_SYNC_PULSE_EDGE        SPI_FRAME_PULSE_EDGE_COINCIDES_FIRST_BIT_CLOCK
+#define DRV_SPI_PERIPHERAL_ID                SPI_ID_2
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: OSAL Configuration
+// Section: SDCARD Driver Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define DRV_SDCARD_INSTANCES_NUMBER          1
+#define DRV_SDCARD_CLIENTS_NUMBER            1
+#define DRV_SDCARD_INDEX_MAX                 1
+#define DRV_SDCARD_INDEX                     DRV_SDCARD_INDEX_0
+#define DRV_SDCARD_QUEUE_POOL_SIZE           10
+/* Defines if the card detect logic as designed in hardware */
+#define DRV_SDCARD_CD_LOGIC_ACTIVE_HIGH
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Media Manager Configuration
 // *****************************************************************************
 // *****************************************************************************
 
+/* Max Number of media used in the demo */
+#define SYS_FS_MEDIA_NUMBER               1
+/* Max Number of volumes to be allocated */
+#define SYS_FS_VOLUME_NUMBER              1
+/* Media Sector Size information */
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: SYS FS Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+/* Max Number of file system to be supported for the demo */
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
+/* Max Number of files that will be opened at a time */
+#define SYS_FS_MAX_FILES                  2
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: OS Abstraction Layer Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: LED Configuration for success and failure
+// *****************************************************************************
+// *****************************************************************************
+
+#define BSP_SwitchONSuccessLED()          BSP_SwitchONLED(LED_GRN)
+#define BSP_SwitchONFailureLED()          BSP_SwitchONLED(LED_RED)
+
+
+/* This is a temporary workaround for an issue with the peripheral library "Exists"
+   functions that causes superfluous warnings.  It "nulls" out the definition of
+   The PLIB function attribute that causes the warning.  Once that issue has been
+   resolved, this definition should be removed. */
+
+#ifndef _PLIB_UNSUPPORTED
+   #define _PLIB_UNSUPPORTED
+#endif
+
+//BSP related stuff
+#define PIC_SK
+#define MEB_2_BOARD
+#define USE_MEBII
+#include "bsp_config.h"
+//#include "bsp/gfx/meb/meb2/bsp_config.h"
+//#include "bsp/gfx/meb/meb2/display/wqvga/bsp_config.h"
 
 #endif // _SYS_CONFIG_H
 /*******************************************************************************

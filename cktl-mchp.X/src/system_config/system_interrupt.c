@@ -56,8 +56,12 @@ bool usartIntTriggered;
 // *****************************************************************************
 // Section: Interrupt Service Routines (ipl1=LOW...ipl7=HIGH)
 // *****************************************************************************
-// *****************************************************************************
-void __ISR(_UART2_RX_VECTOR, ipl2) _InterruptHandler_RS485_RX(void)
+// ****************************usartIntTriggered = false;*************************************************
+
+//////////////////////////////////
+// DN Communications Interrupts //
+//////////////////////////////////
+void __ISR(_UART2_RX_VECTOR, ipl7) _InterruptHandler_RS485_RX(void)
 {
    /* Clear the interrupt flag */
    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_2_RECEIVE);
@@ -73,10 +77,10 @@ void __ISR(_UART2_RX_VECTOR, ipl2) _InterruptHandler_RS485_RX(void)
       /* Echo what we just received */
       PutCharacter(data);
    }
-   usartIntTriggered = 1;
+   usartIntTriggered = true;
 }
 
-void __ISR(_UART2_TX_VECTOR, ipl2) _InterruptHandler_RS485_TX(void)
+void __ISR(_UART2_TX_VECTOR, ipl7) _InterruptHandler_RS485_TX(void)
 {
    /* Clear the interrupt flag */
    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_2_TRANSMIT);
@@ -87,6 +91,20 @@ void __ISR(_UART2_TX_VECTOR, ipl2) _InterruptHandler_RS485_TX(void)
       PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
       BSP_SwitchONLED(LED_5);
    }
+}
+
+
+////////////////////////
+// SD Card Interrupts //
+////////////////////////
+void __ISR ( _SPI2_RX_VECTOR,ipl4 ) _InterruptHandler_SPI_RX_stub ( void )
+{
+    DRV_SPI_Tasks((SYS_MODULE_OBJ)appDrvObj.drvSPIObj);
+}
+
+void __ISR ( _SPI2_TX_VECTOR,ipl4 ) _InterruptHandler_SPI_TX_stub ( void )
+{
+    DRV_SPI_Tasks((SYS_MODULE_OBJ)appDrvObj.drvSPIObj);
 }
 
 /*

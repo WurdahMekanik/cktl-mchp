@@ -57,6 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 void WriteString(const char *string);
 void PutCharacter(const char character);
+void UART_Tasks(void);
 
 
 #endif	/* UART_FUNCTIONS_H */

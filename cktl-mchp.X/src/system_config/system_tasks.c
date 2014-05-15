@@ -104,9 +104,36 @@ void SYS_Tasks ( void )
    GFX_DRV_lcc_Tasks();
 	*/
 
- 
+   /* UART task routine */
+   if( BSP_ReadSwitch(SWITCH_S1) )//|| BSP_ReadSwitch(mTouch_1) || BSP_ReadSwitch(mTouch_2) )
+   {
+      BSP_SwitchONLED(LED_5);
+      UART_Tasks();
+      usartIntTriggered = false;
+      //while( BSP_ReadSwitch(SWITCH_S1) );
+   }
+   else
+   {
+      BSP_SwitchOFFLED(LED_5);
+   }
+   if (usartIntTriggered == true)
+   {
+      /* LED says we got a message */
+      BSP_SwitchONLED(LED_3);
+   }
+   else
+   {
+      BSP_SwitchOFFLED(LED_3);
+   }
+
+   /* Task routine for sys_fs */
+   SYS_FS_Tasks();
+
+   /* Call the SDCARD Task */
+   DRV_SDCARD_Tasks(appDrvObj.drvSDCARDObj);
+
    /* Call the application's tasks routine */
-   APP_Tasks( );
+   APP_Tasks();
 }
 
 

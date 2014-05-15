@@ -62,6 +62,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Application Variables
 // *****************************************************************************
 // *****************************************************************************
+const uint8_t writeData[13] = "Hello World";
 char txData[] = "Testing 8-bit SPI!";
 char rxData[sizeof(txData)];
 static uint32_t txDataSize = sizeof(txData);
@@ -77,7 +78,21 @@ static uint32_t dataIndex = 0;
     This structure contains application data.
 */
 
-APP_DATA appObject;
+APP_DATA appObj;
+
+
+// *****************************************************************************
+/* Driver objects.
+
+  Summary:
+    Contains driver objects.
+
+  Description:
+    This structure contains driver objects returned by the driver init routines
+    to the application. These objects are passed to the driver tasks routines.
+*/
+
+APP_DRV_OBJECTS appDrvObj;
 
 
 // *****************************************************************************
@@ -111,7 +126,8 @@ APP_DATA appObject;
 void APP_Initialize ( void )
 {
    /* Put the application into its initial state */
-   appObject.state = USART_ENABLE;
+   appObj.state = APP_START;
+   usartIntTriggered = false;
 }
 
 /******************************************************************************
@@ -122,40 +138,135 @@ void APP_Initialize ( void )
     See prototype in app.h.
  */
 
+// TODO: separate into multiple functions... UART_Tasks, SDCard_Tasks, Pour_Tasks, etc...
 void APP_Tasks(void)
 {
-   if (PLIB_USART_TransmitterIsEmpty(USART_ID_2))
+   switch (appObj.state)
    {
-      PLIB_PORTS_PinClear( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
-      BSP_SwitchOFFLED(LED_4);
-      BSP_SwitchOFFLED(LED_5);
-   }
-   switch (appObject.state)
-   {
-      case USART_ENABLE:
-         usartIntTriggered = 0;
+      case APP_START:
          BSP_SwitchONLED(LED_1);
-         /* Enable the UART module*/
-         PLIB_USART_Enable(USART_ID_2);
-         appObject.state =  USART_TRANSMIT;
-         break;
-
-      case USART_TRANSMIT:
-         WriteString("BLAH \n");
-         appObject.state = USART_RECEIVE_DONE;
-         BSP_SwitchONLED(LED_2);
-         break;
-
-      case USART_RECEIVE_DONE:
-         if ( BSP_ReadSwitch(SWITCH_S1) )//|| BSP_ReadSwitch(mTouch_1) || BSP_ReadSwitch(mTouch_2) )
+         if(SYS_FS_Mount("/dev/mmcblka1", "/mnt/myDrive", FAT, 0, NULL) != 0)
          {
-            BSP_SwitchOFFLED(LED_2);
-            BSP_SwitchOFFLED(LED_3);
-            usartIntTriggered = 0;
-            appObject.state = USART_TRANSMIT;
+            /* The disk could not be mounted. Try
+             * mounting again until success. */
+            appObj.state = APP_START;
+            break;
          }
-         if (usartIntTriggered)
-            BSP_SwitchONLED(LED_3);
+         appObj.state =  APP_SET_CURRENT_DRIVE;
+         break;
+      
+      case APP_SET_CURRENT_DRIVE:
+         if(SYS_FS_CurrentDriveSet("/mnt/myDrive") == SYS_FS_RES_FAILURE)
+         {
+            /* Error while setting current drive */
+            appObj.state = APP_ERROR;
+         }
+         else
+         {
+            /* Open a file for reading. */
+            appObj.state = APP_OPEN_FIRST_FILE;
+         }
+         break;
+
+      case APP_OPEN_FIRST_FILE:
+         appObj.fileHandle = SYS_FS_FileOpen("FILE_TOO_LONG_NAME_EXAMPLE_123.JPG",
+                                                (SYS_FS_FILE_OPEN_READ));
+         if(appObj.fileHandle == SYS_FS_HANDLE_INVALID)
+         {
+            /* Could not open the file. Error out*/
+            appObj.state = APP_ERROR;
+         }
+         else
+         {
+            /* Create a directory. */
+            appObj.state = APP_CREATE_DIRECTORY;
+         }
+         break;
+      
+      case APP_CREATE_DIRECTORY:
+         if(SYS_FS_DirectoryMake("DirDurr") == SYS_FS_RES_FAILURE)
+         {
+            /* Error while setting current drive */
+            appObj.state = APP_ERROR;
+         }
+         else
+         {
+            /* Open a second file for writing. */
+            appObj.state = APP_OPEN_SECOND_FILE;
+         }
+         break;
+      
+      case APP_OPEN_SECOND_FILE:
+         /* Open a second file inside "Dir1" */
+         appObj.fileHandle1 = SYS_FS_FileOpen("DirDurr/FILE_TOO_LONG_NAME_EXAMPLE_123_1.JPG",
+                                                 (SYS_FS_FILE_OPEN_WRITE));
+         if(appObj.fileHandle1 == SYS_FS_HANDLE_INVALID)
+         {
+            /* Could not open the file. Error out*/
+            appObj.state = APP_ERROR;
+         }
+         else
+         {
+            /* Read from one file and write to another file */
+            appObj.state = APP_READ_WRITE_TO_FILE;
+         }
+         break;
+
+      case APP_READ_WRITE_TO_FILE:
+         if(SYS_FS_FileRead(appObj.fileHandle, (void *)appObj.data, 512) == -1)
+         {
+            /* There was an error while reading the file.
+             * Close the file and error out. */
+            SYS_FS_FileClose(appObj.fileHandle);
+            appObj.state = APP_ERROR;
+         }
+         else
+         {
+            /* If read was success, try writing to the new file */
+            if(SYS_FS_FileWrite(appObj.fileHandle1, (const void *)appObj.data, 512) == -1)
+            {
+               /* Write was not successful. Close the file and error out.*/
+               SYS_FS_FileClose(appObj.fileHandle1);
+               appObj.state = APP_ERROR;
+            }
+            else if(SYS_FS_FileEOF(appObj.fileHandle) == 1)    /* Test for end of file */
+            {
+               /* Continue the read and write process, untill the end of file is reached */
+               appObj.state = APP_CLOSE_FILE;
+            }
+         }
+         break;
+
+      case APP_CLOSE_FILE:
+         /* Close both files */
+         SYS_FS_FileClose(appObj.fileHandle);
+         SYS_FS_FileClose(appObj.fileHandle1);
+         /* The test was successful. Lets idle. */
+         appObj.state = APP_IDLE;
+         break;
+         
+      case APP_UNMOUNT_DISK:
+         if(SYS_FS_Unmount("/mnt/myDrive") != 0)
+         {
+            /* The disk could not be un mounted. Try
+             * un-mounting again untill success. */
+            appObj.state = APP_UNMOUNT_DISK;
+         }
+         else
+         {
+            /* Un-mnount was successful. Mount the disk again */
+            appObj.state = APP_IDLE;
+         }
+         break;
+
+      case APP_IDLE:
+         BSP_SwitchONLED(LED_4);
+         break;
+
+      case APP_ERROR:
+         BSP_SwitchONLED(LED_1);
+         BSP_SwitchONLED(LED_2);
+         BSP_SwitchONLED(LED_3);
          break;
 
       default:

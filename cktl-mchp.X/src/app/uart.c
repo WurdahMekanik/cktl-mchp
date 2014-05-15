@@ -65,8 +65,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 void WriteString(const char *string)
 {
+   // Enable RS-485 Board
    PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
-   BSP_SwitchONLED(LED_4);
+   
    while (*string != '\0')
    {
       /* Send character */
@@ -78,6 +79,9 @@ void WriteString(const char *string)
       /* Wait for the transmit shift register to empty (transfer completed) */
       while (!PLIB_USART_TransmitterIsEmpty(USART_ID_2));
    }
+   
+   // Disable RS-485 Board
+   PLIB_PORTS_PinClear( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
 }
 
 
@@ -91,15 +95,36 @@ void WriteString(const char *string)
 */
 void PutCharacter(const char character)
 {
+   // Enable RS-485 Board
    PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
-   BSP_SwitchONLED(LED_4);
+
    /* Send character */
    PLIB_USART_TransmitterByteSend(USART_ID_2, character);
 
    /* Wait for the transmit shift register to empty (transfer completed) */
    while (!PLIB_USART_TransmitterIsEmpty(USART_ID_2));
+   
+   // Disable RS-485 Board
+   PLIB_PORTS_PinClear( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
 }
 
+
+/******************************************************************************
+  Function:
+    void UART_Tasks ( void )
+
+  Remarks:
+    See prototype in app.h.
+ */
+void UART_Tasks(void)
+{
+   if (PLIB_USART_TransmitterIsEmpty(USART_ID_2))
+   {
+      // TODO: something?
+   }
+
+   WriteString("BLAH \n");
+}
 
 /*******************************************************************************
  End of File

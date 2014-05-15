@@ -209,11 +209,11 @@ typedef enum
 
 typedef enum
 {
-   #ifdef USE_MEBII
-   /* mTouch B1 */
+#ifdef USE_MEBII
+   /* LED 4 on MEBII */
    LED_4 = PORTS_BIT_POS_6,
 
-   /* mTouch B2 */
+   /* LED 5 on MEBII */
    LED_5 = PORTS_BIT_POS_11,
 #endif
 
@@ -224,13 +224,17 @@ typedef enum
    LED_RED = PORTS_BIT_POS_0,
 
    /* LED 2 on SK */
-   LED_2 = PORTS_BIT_POS_1,
+   /* LED 3 on MEBII */
+   //LED_2 = PORTS_BIT_POS_1,
+   LED_3 = PORTS_BIT_POS_1,
 
    /* YELLOW_LED on SK */
    LED_YEL = PORTS_BIT_POS_1,
 
    /* LED 3 on SK */
-   LED_3 = PORTS_BIT_POS_2,
+   /* LED 2 on MEBII */
+   //LED_3 = PORTS_BIT_POS_2,
+   LED_2 = PORTS_BIT_POS_2,
 
    /* GREEN_LED on SK */
    LED_GRN = PORTS_BIT_POS_2
