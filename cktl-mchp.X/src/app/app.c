@@ -150,7 +150,6 @@ void APP_Tasks(void)
             /* The disk could not be mounted. Try
              * mounting again until success. */
             appObj.state = APP_START;
-            break;
          }
          appObj.state =  APP_SET_CURRENT_DRIVE;
          break;
@@ -165,6 +164,8 @@ void APP_Tasks(void)
          {
             /* Open a file for reading. */
             appObj.state = APP_OPEN_FIRST_FILE;
+            BSP_SwitchOFFLED(LED_1);
+            BSP_SwitchONLED(LED_2);
          }
          break;
 
@@ -180,6 +181,8 @@ void APP_Tasks(void)
          {
             /* Create a directory. */
             appObj.state = APP_CREATE_DIRECTORY;
+            BSP_SwitchOFFLED(LED_2);
+            BSP_SwitchONLED(LED_3);
          }
          break;
       
@@ -261,12 +264,12 @@ void APP_Tasks(void)
 
       case APP_IDLE:
          BSP_SwitchONLED(LED_4);
+         BSP_SwitchONLED(LED_5);
          break;
 
       case APP_ERROR:
          BSP_SwitchONLED(LED_1);
          BSP_SwitchONLED(LED_2);
-         BSP_SwitchONLED(LED_3);
          break;
 
       default:

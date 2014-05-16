@@ -65,15 +65,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // DEVCFG3
 #pragma config FUSBIDIO    = OFF             // USB USBID Selection
-#pragma config IOL1WAY     = ON              // One-time Peripheral Pin Select Configuration
-#pragma config PMDL1WAY    = ON              // One-time Peripheral Module Disable Configuration
-#pragma config PGL1WAY     = ON              // One-time Permission Group Lock One Way Configuration
+#pragma config IOL1WAY     = OFF             // One-time Peripheral Pin Select Configuration
+#pragma config PMDL1WAY    = OFF             // One-time Peripheral Module Disable Configuration
+#pragma config PGL1WAY     = OFF             // One-time Permission Group Lock One Way Configuration
 #pragma config FETHIO      = ON              // Ethernet I/O Pin Select
 #pragma config FMIIEN      = ON              // Ethernet RMII/MII Enable
 //#pragma config USERID = No Setting
 
 // DEVCFG2
-#pragma config UPLLEN      = OFF             // USB PLL Enable
+#pragma config UPLLEN      = ON              // USB PLL Enable
 #pragma config UPLLFSEL    = FREQ_24MHZ      // USB PLL Input Frequency Selection
 #pragma config FPLLODIV    = DIV_2           // System PLL Output Divider
 #pragma config FPLLMULT    = MUL_50          // System PLL Multiplier
@@ -89,7 +89,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config WINDIS      = NORMAL          // Watchdog Timer Window Mode
 #pragma config WDTSPGM     = STOP            // Watchdog Timer Stop During Flash Programming
 #pragma config WDTPS       = PS1048576       // Watchdog Timer Postscaler
-#pragma config FCKSM       = CSDCMD          // Clock Switching & Monitor Selection
+#pragma config FCKSM       = CSECMD          // Clock Switching & Monitor Selection
 #pragma config OSCIOFNC    = ON              // CLKO Output Enable
 #pragma config POSCMOD     = EC              // Primary Oscillator Configuration
 #pragma config IESO        = OFF             // Internal/External Switch Over
@@ -103,7 +103,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config FSLEEP      = OFF             // Flash Sleep Mode
 #pragma config FECCCON     = OFF_UNLOCKED    // Dynamic Flash ECC Config
 #pragma config BOOTISA     = MIPS32          // Boot ISA Selection
-#pragma config TRCEN       = OFF             // Trace Enable
+#pragma config TRCEN       = ON             // Trace Enable
 #pragma config ICESEL      = ICS_PGx2        // In-Circuit Debugger Comm Channel Selection
 #pragma config JTAGEN      = OFF             // JTAG Enable
 #pragma config DEBUG       = ON              // Background Debugger Enable
@@ -135,7 +135,7 @@ const DRV_SPI_INIT drvSPIInit =
    .spiMode                   = DRV_SPI_MODE_MASTER,
    .spiProtocolType           = DRV_SPI_PROTOCOL_TYPE_STANDARD,
    .commWidth                 = SPI_COMMUNICATION_WIDTH_8BITS,
-   .baudRate                  = 200000,
+   .baudRate                  = 100000,
    .bufferType                = DRV_SPI_BUFFER_TYPE_STANDARD,
    .rxInterruptMode           = 0,
    .txInterruptMode           = 0,

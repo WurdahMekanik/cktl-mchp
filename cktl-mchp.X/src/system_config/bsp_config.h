@@ -146,15 +146,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 typedef enum
 {
 #ifdef USE_MEBII
-
-#ifdef USE_MTOUCH
-   /* mTouch B1 */
-   mTouch_1 = PORTS_BIT_POS_6,
-
-   /* mTouch B2 */
-   mTouch_2 = PORTS_BIT_POS_10,
-#endif
-
    /* MEBII SWITCH 1 */
    SWITCH_S1 = PORTS_BIT_POS_0,
 #endif

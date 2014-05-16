@@ -112,15 +112,6 @@ void BSP_Initialize(void )
    PLIB_PORTS_PinDirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
    PLIB_PORTS_PinClear( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
 
-#ifdef USE_MTOUCH
-   PLIB_PORTS_PinModePerPortSelect (PORTS_ID_0, PORT_CHANNEL_H, mTouch_1, BSP_DIGITAL_PIN);
-   PLIB_PORTS_PinModePerPortSelect (PORTS_ID_0, PORT_CHANNEL_A, mTouch_2, BSP_DIGITAL_PIN);
-   PLIB_PORTS_ChangeNoticePullUpPerPortEnable (PORTS_ID_0, PORT_CHANNEL_H, mTouch_1);
-   PLIB_PORTS_ChangeNoticePullUpPerPortEnable (PORTS_ID_0, PORT_CHANNEL_A, mTouch_2);
-   PLIB_PORTS_PinDirectionInputSet ( PORTS_ID_0, PORT_CHANNEL_H, mTouch_1 );
-   PLIB_PORTS_PinDirectionInputSet ( PORTS_ID_0, PORT_CHANNEL_A, mTouch_2 );
-#endif
-
 #endif
 
 }

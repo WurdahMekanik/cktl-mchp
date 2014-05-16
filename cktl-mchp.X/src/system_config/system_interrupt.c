@@ -80,18 +80,18 @@ void __ISR(_UART2_RX_VECTOR, ipl7) _InterruptHandler_RS485_RX(void)
    usartIntTriggered = true;
 }
 
-void __ISR(_UART2_TX_VECTOR, ipl7) _InterruptHandler_RS485_TX(void)
-{
-   /* Clear the interrupt flag */
-   PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_2_TRANSMIT);
-   BSP_SwitchONLED(LED_4);
-
-   if (PLIB_USART_TransmitterBufferIsFull(USART_ID_2))
-   {
-      PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
-      BSP_SwitchONLED(LED_5);
-   }
-}
+//void __ISR(_UART2_TX_VECTOR, ipl7) _InterruptHandler_RS485_TX(void)
+//{
+//   /* Clear the interrupt flag */
+//   PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_2_TRANSMIT);
+//   BSP_SwitchONLED(LED_4);
+//
+//   if (PLIB_USART_TransmitterBufferIsFull(USART_ID_2))
+//   {
+//      PLIB_PORTS_PinSet( PORTS_ID_0, PORT_CHANNEL_A, PORTS_BIT_POS_10 );
+//      BSP_SwitchONLED(LED_5);
+//   }
+//}
 
 
 ////////////////////////

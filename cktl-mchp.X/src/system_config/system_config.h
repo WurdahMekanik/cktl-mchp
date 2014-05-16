@@ -60,39 +60,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-//Graphics Controller
-#define GFX_USE_DISPLAY_CONTROLLER_LCC
-
-//Graphics Library
-#define USE_TOUCHSCREEN
-#define USE_MULTIBYTECHAR
-#define GFX_LIB_CFG_USE_GOL
-
-//Display
-#define GFX_USE_DISPLAY_PANEL_PH480272T_005_I11Q
-
-//LCC Specific
-#define LCC_EXTERNAL_MEMORY
-
-// GOL... i think?
-#define IMG_SUPPORT_JPEG
-#define USE_ALPHABLEND_LITE
-#define GFX_CONFIG_ALPHABLEND_DISABLE
-#define GFX_CONFIG_IMAGE_EXTERNAL_DISABLE
-#define GFX_CONFIG_FONT_ANTIALIASED_DISABLE
-#define USE_COMP_RLE
-#define GFX_CONFIG_COLOR_DEPTH            (16)
-#define GFX_CONFIG_FONT_CHAR_SIZE         (8)
-#define GFX_CONFIG_PALETTE_DISABLE
-#define GFX_CONFIG_FOCUS_DISABLE
-#define GFX_CONFIG_FONT_EXTERNAL_DISABLE
-#define GFX_malloc(size)                  malloc(size)
-#define GFX_free(pObj)                    free(pObj)      // <COPY GFX_malloc>
-#define GFX_GOL_FOCUS_LINE                2
-#define GFX_GOL_EMBOSS_SIZE               3
-
-// INTERRUPT
-#define INT_IRQ_MAX                       5
 
 
 // *****************************************************************************
@@ -105,23 +72,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SPI_ID                            SPI_ID_2
 #define UART_BAUD                         115200
 
-/*
-#define SYS_CLK_FREQUENCY                 (80000000L)
-#define SYS_CLK_CONFIG_PRIMARY_XTAL       80000000L
-#define SYS_CLK_CONFIG_SECONDARY_XTAL     80000000
-#define SYS_CLK_CONFIG_FREQ_ERROR_LIMIT   10
-#define SYS_CLK_CONFIG_SYSPLL_INP_DIVISOR 2
-
-#define SYS_CLK_CONFIGBIT_USBPLL_DIVISOR  2
-#define SYS_CLK_CONFIGBIT_USBPLL_ENABLE   true
-
-#define SYS_CLK_CONFIG_SYSPLL_OP_DIVISOR  1
-#define SYS_CLK_ON_WAIT_IDLE              1
-#define SYS_CLK_ON_WAIT_SLEEP             0
-#define SYS_CLK_EXTERNAL_CLOCK            4000000
-#define SYS_CLK_USB_FIXED_DIVISOR         2
-#define SYS_CLK_USB_FIXED_PLL_MULTIPLIER  24
- */
 
 /* Primary oscillator input frequency, the frequency from the crystal */
 #define SYS_CLK_CONFIG_PRIMARY_XTAL       24000000UL

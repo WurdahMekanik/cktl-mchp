@@ -105,17 +105,13 @@ void SYS_Tasks ( void )
 	*/
 
    /* UART task routine */
-   if( BSP_ReadSwitch(SWITCH_S1) )//|| BSP_ReadSwitch(mTouch_1) || BSP_ReadSwitch(mTouch_2) )
+   if( BSP_ReadSwitch(SWITCH_S1) )
    {
-      BSP_SwitchONLED(LED_5);
       UART_Tasks();
       usartIntTriggered = false;
-      //while( BSP_ReadSwitch(SWITCH_S1) );
+      while( BSP_ReadSwitch(SWITCH_S1) );
    }
-   else
-   {
-      BSP_SwitchOFFLED(LED_5);
-   }
+
    if (usartIntTriggered == true)
    {
       /* LED says we got a message */
