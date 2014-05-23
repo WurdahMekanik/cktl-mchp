@@ -126,6 +126,8 @@ void SYS_Tasks ( void )
    SYS_FS_Tasks();
 
    /* Call the SDCARD Task */
+   // TODO: debug the _DRV_SDCARD_MediaInitialize(object) within this function...
+   // line # 620
    DRV_SDCARD_Tasks(appDrvObj.drvSDCARDObj);
 
    /* Call the application's tasks routine */
