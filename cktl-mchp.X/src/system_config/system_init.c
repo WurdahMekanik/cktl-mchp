@@ -247,10 +247,11 @@ void SYS_Initialize ( void* data )
    SYS_INT_Initialize();
 
    /* Map USART pins*/
-   PLIB_PORTS_RemapOutput(PORTS_ID_0, OTPUT_FUNC_U2TX, OUTPUT_PIN_RPB14);
+   PLIB_PORTS_RemapOutput(PORTS_ID_0, OTPUT_FUNC_U2TX, OUTPUT_PIN_RPF12);
    PLIB_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_U2RX, INPUT_PIN_RPG6);
    ANSELGbits.ANSG6 = 0;
    ANSELBbits.ANSB14 = 0;
+   ANSELFbits.ANSF12 = 0;
 
    /* Remap the SPI pins */
    SYS_PORTS_RemapOutput(PORTS_ID_0, OTPUT_FUNC_SDO2, OUTPUT_PIN_RPG8);

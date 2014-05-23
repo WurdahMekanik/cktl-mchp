@@ -112,15 +112,15 @@ void SYS_Tasks ( void )
       while( BSP_ReadSwitch(SWITCH_S1) );
    }
 
-   if (usartIntTriggered == true)
-   {
-      /* LED says we got a message */
-      BSP_SwitchONLED(LED_3);
-   }
-   else
-   {
-      BSP_SwitchOFFLED(LED_3);
-   }
+//   if (usartIntTriggered == true)
+//   {
+//      /* LED says we got a message */
+//      BSP_SwitchONLED(LED_3);
+//   }
+//   else
+//   {
+//      BSP_SwitchOFFLED(LED_3);
+//   }
 
    /* Task routine for sys_fs */
    SYS_FS_Tasks();

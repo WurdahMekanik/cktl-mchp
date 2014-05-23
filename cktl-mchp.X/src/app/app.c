@@ -144,7 +144,7 @@ void APP_Tasks(void)
    switch (appObj.state)
    {
       case APP_START:
-         BSP_SwitchONLED(LED_1);
+//         BSP_SwitchONLED(LED_1);
          if(SYS_FS_Mount("/dev/mmcblka1", "/mnt/myDrive", FAT, 0, NULL) != 0)
          {
             /* The disk could not be mounted. Try
@@ -164,8 +164,8 @@ void APP_Tasks(void)
          {
             /* Open a file for reading. */
             appObj.state = APP_OPEN_FIRST_FILE;
-            BSP_SwitchOFFLED(LED_1);
-            BSP_SwitchONLED(LED_2);
+//            BSP_SwitchOFFLED(LED_1);
+//            BSP_SwitchONLED(LED_2);
          }
          break;
 
@@ -181,8 +181,8 @@ void APP_Tasks(void)
          {
             /* Create a directory. */
             appObj.state = APP_CREATE_DIRECTORY;
-            BSP_SwitchOFFLED(LED_2);
-            BSP_SwitchONLED(LED_3);
+//            BSP_SwitchOFFLED(LED_2);
+//            BSP_SwitchONLED(LED_3);
          }
          break;
       
@@ -263,13 +263,13 @@ void APP_Tasks(void)
          break;
 
       case APP_IDLE:
-         BSP_SwitchONLED(LED_4);
-         BSP_SwitchONLED(LED_5);
+//         BSP_SwitchONLED(LED_4);
+//         BSP_SwitchONLED(LED_5);
          break;
 
       case APP_ERROR:
-         BSP_SwitchONLED(LED_1);
-         BSP_SwitchONLED(LED_2);
+//         BSP_SwitchONLED(LED_1);
+//         BSP_SwitchONLED(LED_2);
          break;
 
       default:
