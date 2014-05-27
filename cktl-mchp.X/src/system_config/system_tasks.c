@@ -127,7 +127,8 @@ void SYS_Tasks ( void )
 
    /* Call the SDCARD Task */
    // TODO: debug the _DRV_SDCARD_MediaInitialize(object) within this function...
-   // line # 620
+   // problem appears with the for loop under "case DRV_SDCARD_MEDIA_STATE_INIT_DELAY_INITIAL"
+   // around line #1974 in my readability-modified drv_sdcard_dynamic.c
    DRV_SDCARD_Tasks(appDrvObj.drvSDCARDObj);
 
    /* Call the application's tasks routine */
